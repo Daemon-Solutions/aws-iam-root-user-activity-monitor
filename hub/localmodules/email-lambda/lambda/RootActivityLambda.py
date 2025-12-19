@@ -13,7 +13,9 @@ logger.setLevel(logging.DEBUG)
 snsclient = boto3.client('sns')
 snsARN = os.environ['SNSARN']
 
-def lambda_handler(event, context):	
+def lambda_handler(sns_event, context):	
+	sns_message = sns_event['Records'][0]['Sns']['Message']
+	event = json.loads(sns_message)
 	eventname = event['detail']['eventName']
 	user = event['detail']['userIdentity']['type']
 	targetAccount = event['account']

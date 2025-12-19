@@ -21,3 +21,39 @@ See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more inform
 ## License
 
 This implementation is licensed under the MIT-0 License. See the LICENSE file.
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
+
+## Providers
+
+No providers.
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_root-activity-monitor-euw1"></a> [root-activity-monitor-euw1](#module\_root-activity-monitor-euw1) | ./modules/hub | n/a |
+| <a name="module_spoke"></a> [spoke](#module\_spoke) | ./modules/spoke | n/a |
+
+## Resources
+
+No resources.
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_hub_account_id"></a> [hub\_account\_id](#input\_hub\_account\_id) | n/a | `string` | n/a | yes |
+| <a name="input_spoke_account_assume_role_arn"></a> [spoke\_account\_assume\_role\_arn](#input\_spoke\_account\_assume\_role\_arn) | n/a | `string` | n/a | yes |
+| <a name="input_spoke_account_external_id"></a> [spoke\_account\_external\_id](#input\_spoke\_account\_external\_id) | n/a | `string` | n/a | yes |
+| <a name="input_spoke_account_id"></a> [spoke\_account\_id](#input\_spoke\_account\_id) | n/a | `string` | n/a | yes |
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->

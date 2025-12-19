@@ -35,8 +35,8 @@ No modules.
 
 | Name                                                                              | Description                                             | Type          | Default                    | Required |
 | --------------------------------------------------------------------------------- | ------------------------------------------------------- | ------------- | -------------------------- | :------: |
-| <a name="input_SNSSubscriptions"></a> [SNSSubscriptions](#input_SNSSubscriptions) | Add your email here to be able to receive notifications | `string`      | `"email@example.com"`      |   yes    |
-| <a name="input_SNSTopicName"></a> [SNSTopicName](#input_SNSTopicName)             | Add SNS topic name.                                     | `string`      | `"monitor-root-API-calls"` |   yes    |
+| <a name="input_email_address"></a> [email_address](#input_email_address) | Add your email here to be able to receive notifications | `string`      | `"email@example.com"`      |   yes    |
+| <a name="input_sns_topic_name"></a> [sns_topic_name](#input_sns_topic_name)             | Add SNS topic name.                                     | `string`      | `"monitor-root-API-calls"` |   yes    |
 | <a name="input_region"></a> [region](#input_region)                               | Add the region code where resources will be deployed.   | `string`      | `"eu-west-1"`              |   yes    |
 | <a name="input_tags"></a> [tags](#input_tags)                                     | Add tags to set on module resources.                    | `map(string)` | `{}`                       |   yes    |
 
