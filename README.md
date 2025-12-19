@@ -26,65 +26,7 @@ This implementation emits two distinct alert types, and provides multiple built-
 
 - **Custom integrations:** The hub publishes notifications to Amazon SNS topics. If you want custom behavior (for example, your own Lambda handlers or downstream integrations), subscribe your functions or endpoints to the SNS topics that emit the root-login and root-activity messages.
 
-Using the built-in alerters is fully optional — subscribe your own Lambdas or endpoints to the SNS topics to integrate with other tools or workflows.
-
-### Example for the hub: enable built-in alerters (Terraform variables)
-
-Below is an example `terraform.tfvars` snippet that shows how to enable the built-in Slack, PagerDuty and Email alerters for the hub module. Adjust values for your environment (webhook URLs, routing keys, email addresses):
-
-```hcl
-# Root login alerts
-enable_root_login_slack_alert = true
-enable_root_login_pagerduty_alert = true
-enable_root_login_email_alert = true
-
-root_login_slack_lambda_name = "root-login-slack-alarm-handler"
-root_login_pagerduty_lambda_name = "root-login-pagerduty-alarm-handler"
-root_login_email_lambda_name = "root-login-email-alarm-handler"
-
-# Root activity alerts
-enable_root_activity_slack_alert = true
-enable_root_activity_email_alert = true
-
-root_activity_slack_lambda_name = "root-activity-slack-alarm-handler"
-root_activity_email_lambda_name = "root-activity-email-alarm-handler"
-
-# Secrets / integration settings
-slack_webhook_url = <your_slack_webhook_url>
-pagerduty_routing_key = <your_pagerduty_routing_key>
-
-# Email config (object expected by the module)
-root_activity_email_config = {
-	email_address = "ops@example.com"
-}
-```
-
-### Referencing SNS topics and subscribing custom Lambdas
-
-The hub module exports SNS topic ARNs you can use to subscribe your own Lambdas or endpoints instead of (or in addition to) the built-in handlers. The outputs are:
-
-- `root_activity_sns_topic_arn` — ARN for the topic that receives root-activity notifications.
-- `root_alarm_sns_topic_arn` — ARN for the topic that receives root-login alarm notifications.
-
-Example: subscribe a custom Lambda to the root-activity topic by referencing the module output:
-
-```hcl
-resource "aws_lambda_permission" "allow_sns" {
-	statement_id  = "AllowSNSInvoke"
-	action        = "lambda:InvokeFunction"
-	function_name = aws_lambda_function.my_custom_handler.function_name
-	principal     = "sns.amazonaws.com"
-	source_arn    = module.hub.root_activity_sns_topic_arn
-}
-
-resource "aws_sns_topic_subscription" "custom_lambda_sub" {
-	topic_arn = module.hub.root_activity_sns_topic_arn
-	protocol  = "lambda"
-	endpoint  = aws_lambda_function.my_custom_handler.arn
-}
-```
-
-Using the SNS outputs makes it easy to integrate your own processing or notification workflows while still benefiting from the built-in alerting provided by this project.
+Using the built-in alerters is fully optional — subscribe your own Lambdas or endpoints to the SNS topics emitted by the hub module to integrate with other tools or workflows.
 
 ## Security
 
