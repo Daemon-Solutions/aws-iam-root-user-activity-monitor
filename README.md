@@ -14,6 +14,14 @@ The code in this repository helps you set up the following target architecture.
 
 For prerequisites and instructions for using this AWS Prescriptive Guidance pattern, see [Monitor IAM root user activity](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/monitor-iam-root-user-activity.html).
 
+## About This Repository
+
+This repository is a fork of the [AWS Samples AWS IAM Root User Activity Monitor](https://github.com/aws-samples/aws-iam-root-user-activity-monitor). The key differences and improvements in this version are:
+
+- **Pure Terraform Implementation**: Unlike the original repository, which may include CloudFormation templates, this version is implemented entirely in Terraform, providing a consistent infrastructure-as-code approach.
+- **Enhanced Notification Flexibility**: This module offers built-in support for notifications via Slack, PagerDuty, and email through dedicated Lambda functions and Terraform resources.
+- **Custom Notification Integration**: Users can easily extend notifications by subscribing to the output SNS topics, allowing integration with custom Lambda handlers, other AWS services, or third-party tools.
+
 ## Alerts and notification options
 
 This implementation emits two distinct alert types, and provides multiple built-in ways to notify operators:
@@ -28,44 +36,7 @@ This implementation emits two distinct alert types, and provides multiple built-
 
 Using the built-in alerters is fully optional — subscribe your own Lambdas or endpoints to the SNS topics emitted by the hub module to integrate with other tools or workflows.
 
-## Security
-
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
 
 ## License
 
 This implementation is licensed under the MIT-0 License. See the LICENSE file.
-
-<!-- BEGIN_TF_DOCS -->
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
-
-## Providers
-
-No providers.
-
-## Modules
-
-No modules.
-
-## Resources
-
-No resources.
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_hub_account_id"></a> [hub\_account\_id](#input\_hub\_account\_id) | n/a | `string` | n/a | yes |
-| <a name="input_spoke_account_assume_role_arn"></a> [spoke\_account\_assume\_role\_arn](#input\_spoke\_account\_assume\_role\_arn) | n/a | `string` | n/a | yes |
-| <a name="input_spoke_account_external_id"></a> [spoke\_account\_external\_id](#input\_spoke\_account\_external\_id) | n/a | `string` | n/a | yes |
-| <a name="input_spoke_account_id"></a> [spoke\_account\_id](#input\_spoke\_account\_id) | n/a | `string` | n/a | yes |
-
-## Outputs
-
-No outputs.
-<!-- END_TF_DOCS -->

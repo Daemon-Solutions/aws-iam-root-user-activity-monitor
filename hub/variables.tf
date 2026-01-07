@@ -25,21 +25,21 @@ variable "sns_root_login_alarm_topic_display_name" {
 
 
 variable "hub_event_bus_name" {
-  type = string
+  type        = string
   description = "Name of the EventBridge event bus in the account"
-  default = "hub-root-activity"
-} 
+  default     = "hub-root-activity"
+}
 
 
 variable "cloudtrail_log_group_name" {
-  type = string
+  type        = string
   description = "Cloudtrail cloudwatch log group name"
 }
 
 variable "alarm_evaluation_periods" {
-  type = number
+  type        = number
   description = "The period over which the root account activity metric is evaluated, in seconds"
-  default = 300
+  default     = 300
 }
 
 
@@ -66,10 +66,7 @@ variable "root_login_slack_lambda_name" {
   type        = string
   default     = "root-login-slack-alarm-handler"
   description = "Lambda function name for root login Slack alert."
-  validation {
-    condition     = !var.enable_root_login_slack_alert || (var.root_login_slack_lambda_name != "")
-    error_message = "root_login_slack_lambda_name must be supplied when enable_root_login_slack_alert is true."
-  }
+
 }
 
 
@@ -78,10 +75,6 @@ variable "root_login_pagerduty_lambda_name" {
   type        = string
   default     = "root-login-pagerduty-alarm-handler"
   description = "Lambda function name for root login PagerDuty alert."
-  validation {
-    condition     = !var.enable_root_login_pagerduty_alert || (var.root_login_pagerduty_lambda_name != "")
-    error_message = "root_login_pagerduty_lambda_name must be supplied when enable_root_login_pagerduty_alert is true."
-  }
 }
 
 
@@ -90,10 +83,6 @@ variable "root_login_email_lambda_name" {
   type        = string
   default     = "root-login-email-alarm-handler"
   description = "Lambda function name for root login email alert."
-  validation {
-    condition     = !var.enable_root_login_email_alert || (var.root_login_email_lambda_name != "")
-    error_message = "root_login_email_lambda_name must be supplied when enable_root_login_email_alert is true."
-  }
 }
 
 ## Root activity alerts
@@ -114,10 +103,6 @@ variable "root_activity_slack_lambda_name" {
   type        = string
   default     = "root-activity-slack-alarm-handler"
   description = "Lambda function name for root activity Slack alert."
-  validation {
-    condition     = !var.enable_root_activity_slack_alert || (var.root_activity_slack_lambda_name != "")
-    error_message = "root_activity_slack_lambda_name must be supplied when enable_root_activity_slack_alert is true."
-  }
 }
 
 
@@ -125,39 +110,28 @@ variable "root_activity_email_lambda_name" {
   type        = string
   default     = "root-activity-email-alarm-handler"
   description = "Lambda function name for root activity email alert."
-  validation {
-    condition     = !var.enable_root_activity_email_alert || (var.root_activity_email_lambda_name != "")
-    error_message = "root_activity_email_lambda_name must be supplied when enable_root_activity_email_alert is true."
-  }
+
 }
 
 variable "slack_webhook_url" {
   type        = string
   default     = null
   description = "Slack webhook URL used by Slack alert lambdas. Required if Slack alerts are enabled."
-  validation {
-    condition     = (!var.enable_root_login_slack_alert && !var.enable_root_activity_slack_alert) || (var.slack_webhook_url != null && var.slack_webhook_url != "")
-    error_message = "slack_webhook_url must be supplied when any Slack alert is enabled."
-  }
 }
 
 variable "pagerduty_routing_key" {
   type        = string
   default     = null
   description = "PagerDuty routing key used by PagerDuty alert lambdas. Required if PagerDuty alerts are enabled."
-  validation {
-    condition     = !var.enable_root_login_pagerduty_alert || (var.pagerduty_routing_key != null && var.pagerduty_routing_key != "")
-    error_message = "pagerduty_routing_key must be supplied when PagerDuty alerts are enabled."
-  }
 }
 
 
 variable "root_activity_email_config" {
   description = "Email configuration for root activity notifications"
   type = object({
-    sns_topic_name = optional(string, "aws-iam-root-user-activity-email-monitor")
+    sns_topic_name         = optional(string, "aws-iam-root-user-activity-email-monitor")
     sns_topic_display_name = optional(string, "AWS IAM Root User Activity Monitor")
-    email_address = string
+    email_address          = string
   })
   default = null
 }

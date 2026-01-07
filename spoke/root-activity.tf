@@ -51,7 +51,6 @@ resource "aws_cloudwatch_metric_alarm" "root_account_logins_alarm" {
 resource "aws_cloudwatch_event_rule" "root_alarm_rule" {
   name        = "RootAlarmRule"
   description = "Forwards root user alarm state changes to the hub event bus"
-  event_bus_name = var.event_bus_name
   event_pattern = <<EOF
 {
   "source": ["aws.cloudwatch"],
@@ -72,7 +71,6 @@ EOF
 resource "aws_cloudwatch_event_rule" "root_activity_monitor_rule" {
   name        = "RootActivityMonitorRule"
   description = "Events rule for monitoring root API activity"
-  event_bus_name = var.event_bus_name
   event_pattern = jsonencode({
     "detail-type" = [
       "AWS API Call via CloudTrail",
@@ -86,4 +84,5 @@ resource "aws_cloudwatch_event_rule" "root_activity_monitor_rule" {
   })
   state = "ENABLED"
 }
+
 

@@ -10,7 +10,6 @@ variable "hub_account" {
 variable "hub_event_bus_name" {
   type = string
   description = "Name of the EventBridge event bus in the hub account"
-  default = "hub-root-activity"
 } 
 
 variable "cloudtrail_log_group_name" {

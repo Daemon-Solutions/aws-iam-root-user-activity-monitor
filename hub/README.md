@@ -47,19 +47,21 @@ No outputs.
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_root_activity"></a> [root\_activity](#module\_root\_activity) | ../localmodules/root-activity | n/a |
 | <a name="module_root_activity_email_alarm_alert"></a> [root\_activity\_email\_alarm\_alert](#module\_root\_activity\_email\_alarm\_alert) | ./localmodules/email-lambda | n/a |
 | <a name="module_root_activity_slack_alert"></a> [root\_activity\_slack\_alert](#module\_root\_activity\_slack\_alert) | ./localmodules/slack-lambda | n/a |
 | <a name="module_root_login_email_alarm_alert"></a> [root\_login\_email\_alarm\_alert](#module\_root\_login\_email\_alarm\_alert) | ./localmodules/email-lambda | n/a |
@@ -72,12 +74,21 @@ No requirements.
 |------|------|
 | [aws_cloudwatch_event_bus.hub_root_activity_eventbus](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_bus) | resource |
 | [aws_cloudwatch_event_permission.hub_root_activity_eventbus_OrgAccess](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_permission) | resource |
+| [aws_cloudwatch_event_rule.root_activity_monitor_rule](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
+| [aws_cloudwatch_event_rule.root_alarm_rule](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
 | [aws_cloudwatch_event_target.root_activity_event_target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target) | resource |
 | [aws_cloudwatch_event_target.root_alarm_event_target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target) | resource |
+| [aws_cloudwatch_log_metric_filter.root_account_logins](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_metric_filter) | resource |
+| [aws_cloudwatch_metric_alarm.root_account_logins_alarm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm) | resource |
+| [aws_cloudwatch_query_definition.root_account_logins_query](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_query_definition) | resource |
 | [aws_sns_topic.root_activity_email_sns_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic) | resource |
 | [aws_sns_topic.root_activity_sns_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic) | resource |
 | [aws_sns_topic.root_login_alarm_sns_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic) | resource |
 | [aws_sns_topic_subscription.root_activity_email_sns_topic_subscription](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_iam_policy_document.root_activity_email_sns_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.root_activity_sns_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.root_login_alarm_sns_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_organizations_organization.myorg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organization) | data source |
 
 ## Inputs
@@ -93,7 +104,7 @@ No requirements.
 | <a name="input_enable_root_login_slack_alert"></a> [enable\_root\_login\_slack\_alert](#input\_enable\_root\_login\_slack\_alert) | Enable Slack alerts for root login events. | `bool` | `false` | no |
 | <a name="input_hub_event_bus_name"></a> [hub\_event\_bus\_name](#input\_hub\_event\_bus\_name) | Name of the EventBridge event bus in the account | `string` | `"hub-root-activity"` | no |
 | <a name="input_pagerduty_routing_key"></a> [pagerduty\_routing\_key](#input\_pagerduty\_routing\_key) | PagerDuty routing key used by PagerDuty alert lambdas. Required if PagerDuty alerts are enabled. | `string` | `null` | no |
-| <a name="input_root_activity_email_config"></a> [root\_activity\_email\_config](#input\_root\_activity\_email\_config) | Email configuration for root activity notifications | <pre>object({<br>    sns_topic_name = optional(string, "aws-iam-root-user-activity-email-monitor")<br>    sns_topic_display_name = optional(string, "AWS IAM Root User Activity Monitor")<br>    email_address = string<br>  })</pre> | `null` | no |
+| <a name="input_root_activity_email_config"></a> [root\_activity\_email\_config](#input\_root\_activity\_email\_config) | Email configuration for root activity notifications | <pre>object({<br>    sns_topic_name         = optional(string, "aws-iam-root-user-activity-email-monitor")<br>    sns_topic_display_name = optional(string, "AWS IAM Root User Activity Monitor")<br>    email_address          = string<br>  })</pre> | `null` | no |
 | <a name="input_root_activity_email_lambda_name"></a> [root\_activity\_email\_lambda\_name](#input\_root\_activity\_email\_lambda\_name) | Lambda function name for root activity email alert. | `string` | `"root-activity-email-alarm-handler"` | no |
 | <a name="input_root_activity_slack_lambda_name"></a> [root\_activity\_slack\_lambda\_name](#input\_root\_activity\_slack\_lambda\_name) | Lambda function name for root activity Slack alert. | `string` | `"root-activity-slack-alarm-handler"` | no |
 | <a name="input_root_login_email_lambda_name"></a> [root\_login\_email\_lambda\_name](#input\_root\_login\_email\_lambda\_name) | Lambda function name for root login email alert. | `string` | `"root-login-email-alarm-handler"` | no |
@@ -109,6 +120,7 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_hub_event_bus_name"></a> [hub\_event\_bus\_name](#output\_hub\_event\_bus\_name) | n/a |
 | <a name="output_orgid"></a> [orgid](#output\_orgid) | n/a |
 | <a name="output_root_activity_sns_topic_arn"></a> [root\_activity\_sns\_topic\_arn](#output\_root\_activity\_sns\_topic\_arn) | n/a |
 | <a name="output_root_alarm_sns_topic_arn"></a> [root\_alarm\_sns\_topic\_arn](#output\_root\_alarm\_sns\_topic\_arn) | n/a |

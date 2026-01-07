@@ -9,3 +9,7 @@ output "root_activity_sns_topic_arn" {
 output "root_alarm_sns_topic_arn" {
   value = aws_sns_topic.root_login_alarm_sns_topic.arn
 }
+
+output "hub_event_bus_name" {
+  value = var.hub_event_bus_name
+}

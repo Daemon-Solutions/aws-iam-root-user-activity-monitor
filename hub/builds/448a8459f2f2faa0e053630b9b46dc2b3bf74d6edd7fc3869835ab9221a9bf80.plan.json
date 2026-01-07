@@ -1,1 +1,0 @@
-{"filename": "builds/448a8459f2f2faa0e053630b9b46dc2b3bf74d6edd7fc3869835ab9221a9bf80.zip", "runtime": "python3.13", "artifacts_dir": "builds", "build_plan": [[["zip", "localmodules/slack-lambda/lambda", null]]], "quiet": "true"}
