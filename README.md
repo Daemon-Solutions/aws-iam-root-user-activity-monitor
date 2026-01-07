@@ -8,9 +8,6 @@ When the IAM root user credentials are used, Amazon CloudWatch and AWS CloudTrai
 
 This repository implements the solution fully using HashiCorp Terraform for both hub and spoke accounts — CloudFormation is no longer required. The Terraform modules and examples in this repo let you deploy the monitoring, event-routing, and notification services entirely with Terraform.
 
-The code in this repository helps you set up the following target architecture.
-
-![RootActivityMonitor](RootActivityMonitor.png)
 
 For prerequisites and instructions for using this AWS Prescriptive Guidance pattern, see [Monitor IAM root user activity](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/monitor-iam-root-user-activity.html).
 
